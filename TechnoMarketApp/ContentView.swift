@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let designOrangeColor = Color( red: 1, green: 110/255, blue: 78/255, opacity: 1)
+
 struct ContentView: View {
     var body: some View {
         ZStack {
@@ -25,10 +27,44 @@ struct ContentView: View {
                     CategoryView(imageName: "ic-book", text: "Books")
                 }
                 
-                HStack {
-                
+                VStack {
+                    HStack {
+                        Text("Hot Sales")
+                            .font(.largeTitle)
+                        Spacer()
+                        Text("see more")
+                            .foregroundColor(designOrangeColor)
+                    }
+                    .padding()
+                    ZStack {
+                        Image("im-iphone")
+                            .cornerRadius(10)
+                        VStack {
+                            Circle()
+                                .foregroundColor(designOrangeColor)
+                                .frame(width: 27, height: 27)
+                            Text("Iphone 12")
+                                .font(.system(size: 25))
+                                .fontWeight(.heavy)
+                            Text("Súper. Mega. Rápido.")
+                            Button {
+                                
+                            } label: {
+                                Text("Buy now!")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 11))
+                                    .fontWeight(.bold)
+                            }
+                            .frame(width: 98, height: 23)
+                            .background(Color.white)
+                            .cornerRadius(5)
+
+                        }
+                        .foregroundColor(.white)
+                    }
+                    
+                    Spacer()
                 }
-                Spacer()
             }
         }
         
