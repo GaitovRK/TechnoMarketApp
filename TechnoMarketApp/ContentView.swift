@@ -12,7 +12,7 @@ let designOrangeColor = Color( red: 1, green: 110/255, blue: 78/255, opacity: 1)
 struct ContentView: View {
     var body: some View {
         ZStack {
-            Color(red: 0.898, green: 0.898, blue: 0.898, opacity: 1)
+            Color(red: 0.98, green: 0.98, blue: 0.98, opacity: 1)
                 .ignoresSafeArea()
             VStack {
                 HStack {
@@ -20,7 +20,7 @@ struct ContentView: View {
                     Text("Zihuatanejo")
                     Image("ic-arrowDown")
                 }
-                HStack {
+                HStack(spacing: 20) {
                     CategoryView(imageName: "ic-phone", text: "Phones")
                     CategoryView(imageName: "ic-computer", text: "Computer")
                     CategoryView(imageName: "ic-heart", text: "Health")
@@ -39,7 +39,7 @@ struct ContentView: View {
                     ZStack {
                         Image("im-iphone")
                             .cornerRadius(10)
-                        VStack {
+                        VStack(alignment: .leading) {
                             Circle()
                                 .foregroundColor(designOrangeColor)
                                 .frame(width: 27, height: 27)
