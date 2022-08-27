@@ -12,59 +12,26 @@ let designOrangeColor = Color( red: 1, green: 110/255, blue: 78/255, opacity: 1)
 struct ContentView: View {
     var body: some View {
         ZStack {
-            Color(red: 0.98, green: 0.98, blue: 0.98, opacity: 1)
+            Color(red: 0.898, green: 0.898, blue: 0.898, opacity: 1)
                 .ignoresSafeArea()
             VStack {
-                HStack {
-                    Image("ic-location")
-                    Text("Zihuatanejo")
-                    Image("ic-arrowDown")
-                }
-                HStack(spacing: 20) {
-                    CategoryView(imageName: "ic-phone", text: "Phones")
-                    CategoryView(imageName: "ic-computer", text: "Computer")
-                    CategoryView(imageName: "ic-heart", text: "Health")
-                    CategoryView(imageName: "ic-book", text: "Books")
-                }
+                LocationView()
+                CategoriesView()
                 
-                VStack {
-                    HStack {
-                        Text("Hot Sales")
-                            .font(.largeTitle)
-                        Spacer()
-                        Text("see more")
-                            .foregroundColor(designOrangeColor)
-                    }
-                    .padding()
-                    ZStack {
-                        Image("im-iphone")
-                            .cornerRadius(10)
-                        VStack(alignment: .leading) {
-                            Circle()
-                                .foregroundColor(designOrangeColor)
-                                .frame(width: 27, height: 27)
-                            Text("Iphone 12")
-                                .font(.system(size: 25))
-                                .fontWeight(.heavy)
-                            Text("Súper. Mega. Rápido.")
-                            Button {
-                                
-                            } label: {
-                                Text("Buy now!")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 11))
-                                    .fontWeight(.bold)
-                            }
-                            .frame(width: 98, height: 23)
-                            .background(Color.white)
-                            .cornerRadius(5)
+                SearchBarView()
 
-                        }
-                        .foregroundColor(.white)
-                    }
-                    
-                    Spacer()
-                }
+                
+//                HStack {
+//                    Text("Hot Sales")
+//                        .font(.largeTitle)
+//                    Spacer()
+//                    Text("see more")
+//                        .foregroundColor(designOrangeColor)
+//                }
+//                .padding()
+//                BannerView()
+//                Spacer()
+                
             }
         }
         
@@ -81,13 +48,14 @@ struct ContentView_Previews: PreviewProvider {
 struct CategoryView: View {
     var imageName: String
     var text: String
+    var isActive : Bool
     
     var body: some View {
         VStack {
             ZStack {
                 Circle()
                     .frame(width: 71, height: 71)
-                    .foregroundColor(.white)
+                    .foregroundColor(designOrangeColor)
                     .shadow(radius: 3)
                 
                 Image(imageName)
@@ -96,6 +64,105 @@ struct CategoryView: View {
             }
             Text(text)
                 .font(.system(size: 12))
+                .foregroundColor(isActive ? designOrangeColor : .black)
         }
+    }
+}
+
+struct BannerView: View {
+    var body: some View {
+        ZStack {
+            Image("im-iphone")
+                .resizable()
+                .cornerRadius(10)
+                .frame(width: 300, height: 190, alignment: .trailing)
+            
+            VStack(alignment: .leading) {
+                Circle()
+                    .foregroundColor(designOrangeColor)
+                    .frame(width: 27, height: 27)
+                Text("Iphone 12")
+                    .font(.system(size: 25))
+                    .fontWeight(.heavy)
+                Text("Súper. Mega. Rápido.")
+                Button {
+                    
+                } label: {
+                    Text("Buy now!")
+                        .foregroundColor(.black)
+                        .font(.system(size: 11))
+                        .fontWeight(.bold)
+                }
+                .frame(width: 98, height: 23)
+                .background(Color.white)
+                .cornerRadius(5)
+                
+            }
+            .foregroundColor(.white)
+        }
+    }
+}
+
+struct LocationView: View {
+    var body: some View {
+        HStack {
+            Image("ic-location")
+            Text("Zihuatanejo")
+            Button {
+                
+            } label: {
+                Image("ic-arrowDown")
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(5)
+            }
+        }
+    }
+}
+
+struct CategoriesView: View {
+    private let categories = ["Phones", "Computer", "Health", "Books", "Others"]
+    private let icons = ["ic-phone", "ic-computer", "ic-heartBeat"]
+    @State var selectedIndex = 0
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                ForEach(0 ..< categories.count) { i in
+                    CategoryView(imageName: icons[i], text: categories[i], isActive: i == selectedIndex)
+                        .onTapGesture {
+                            selectedIndex = i
+                        }
+                }
+                
+            }
+            .padding(.horizontal)
+
+        }
+    }
+}
+
+struct SearchBarView: View {
+    @State var search: String = ""
+    var body: some View {
+        HStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("Search gadgets", text: $search)
+            }
+            .padding(20)
+            .background(Color.white)
+            .cornerRadius(10)
+            .padding(.trailing)
+            
+            Button {
+                
+            } label: {
+                Image("ic-book")
+                    .padding()
+                    .background(designOrangeColor)
+                    .cornerRadius(10)
+            }
+        }
+        .padding(.horizontal)
     }
 }
